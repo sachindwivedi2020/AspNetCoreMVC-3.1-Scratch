@@ -8,9 +8,13 @@ namespace BookStore.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
+        public String Index()
         {
-            return View();
+            return "Sachin Dwivedi";
         }
     }
 }
