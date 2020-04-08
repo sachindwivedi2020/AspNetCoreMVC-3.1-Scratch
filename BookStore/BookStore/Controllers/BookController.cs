@@ -2,30 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BookStore.Models;
+using BookStore.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Controllers
 {
     public class BookController : Controller
     {
-        //calling way : /Book/GetBook
-        public string GetAllBooks()
+        private readonly BookRepository _bookRepository = null;
+        public BookController()
         {
-            return "AllBooks";
+            _bookRepository = new BookRepository();
         }
-
-        //Check How you can pass Single parameter to this Action Method 
-        //calling way :  /Book/GetBook/2
-        public string GetBook(int id)
+        public List<BookModel> GetAllBooks()
         {
-            return $"Book with Id = {id}";
+            return _bookRepository.GetAllBooks();
         }
-
-        //Check How you can pass multiple parameter to this Action Method 
-        //calling way :  /Book/SearchBook?bookName=MVCBook&authorname=Sachin
-        public string SearchBook(string bookName ,string authorName)
+        public BookModel GetBook(int id)
         {
-            return $"Book with name = {bookName} & Author = {authorName}";
+            return _bookRepository.GetBookById(id);        }
+
+        public List<BookModel> SearchBook(string bookName ,string authorName)
+        {
+            return _bookRepository.SearchBook(bookName, authorName);
         }
     }
 }
