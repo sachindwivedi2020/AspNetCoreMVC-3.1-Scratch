@@ -12,9 +12,13 @@ namespace BookStore.Controllers
         //{
         //    return View();
         //}
-        public String Index()
+        public ViewResult Index()
         {
-            return "Sachin Dwivedi";
+            return View();
+        }
+        public ViewResult AboutUs()
+        {
+            return View();
         }
     }
 }
