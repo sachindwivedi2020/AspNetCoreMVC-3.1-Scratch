@@ -12,8 +12,12 @@ namespace BookStore.Controllers
         //{
         //    return View();
         //}
+        [ViewData]
+        public string Title { get; set; }
         public ViewResult Index()
         {
+            Title = "Home By Controller";
+
             return View();
         }
         public ViewResult AboutUs()
