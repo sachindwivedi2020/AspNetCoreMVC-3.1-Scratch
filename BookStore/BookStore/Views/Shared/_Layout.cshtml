@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewData["Title"] | Book Store Application</title>
     <environment include="Development">
-        @*<link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />*@
-        <link rel="stylesheet" 
+        <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+        @*<link rel="stylesheet" 
               href="http://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
               asp-fallback-href="~/lib/twitter-bootstrap/css/bootstrap.css"
               asp-fallback-test-class="sr-only"
               asp-fallback-test-property="position"
               asp-fallback-test-value="absolute"
               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
-              crossorigin="anonymous">
+              crossorigin="anonymous">*@
     </environment>
     <environment exclude="Developement">
         <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -52,6 +52,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" href="/book/getallbooks">All Books</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Book" asp-action="AddNewBook">Add Book</a>
                         </li>
                     </ul>
                 </div>
