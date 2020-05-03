@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BookStore.Controllers;
 using BookStore.DBLayer;
+using BookStore.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,9 +20,12 @@ namespace BookStore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            //Add 
+            //Add context class with connectionstrings
            services.AddDbContext<BookStoreContext>(
                dbContextOptions => dbContextOptions.UseSqlServer("Server=(LocalDb)\\MSSQLLocalDB;Database=BookStore;Integrated Security=True"));
+
+            //add dependency injection
+            services.AddScoped<IBookRepository, BookRepository>();
 
             //Add Dependency that you going to add MVC 
             services.AddControllersWithViews();

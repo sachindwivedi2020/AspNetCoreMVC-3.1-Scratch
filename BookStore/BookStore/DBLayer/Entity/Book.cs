@@ -14,8 +14,7 @@ namespace BookStore.DBLayer.Entity
         public string Category { get; set; }
         public string Language { get; set; }
         public int TotalPages { get; set; }
-
         public DateTime? CreatedBy { get; set; }
-        public DateTime? UpdatedBy { get; set; }
+        public string UpdatedBy { get; set; }
     }
 }

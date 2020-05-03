@@ -1,4 +1,6 @@
-﻿using BookStore.Models;
+﻿using BookStore.DBLayer;
+using BookStore.DBLayer.Entity;
+using BookStore.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,23 +11,50 @@ namespace BookStore.Repository
     /// <summary>
     /// Consider now you are working with Database so we make this data in memory only 
     /// </summary>
-    public class BookRepository
+    public class BookRepository : IBookRepository
     {
+        private readonly BookStoreContext _context;
+        public BookRepository(BookStoreContext context)
+        {
+            _context = context;
+        }
+        public int AddNewBook(BookModel bookModel)
+        {
+            var newBook = new Book()
+            {
+                Author = bookModel.Author,
+                Title = bookModel.Title,
+                Description = bookModel.Description,
+                Category = bookModel.Category,
+                Language = bookModel.Language,
+                TotalPages = bookModel.TotalPages,
+                CreatedBy = DateTime.UtcNow,
+                UpdatedBy = "Sachin Dwivedi"
+            };
+
+            //Add In Context
+            _context.Books.Add(newBook);
+
+            //Add in DB
+            _context.SaveChanges();
+
+            return newBook.Id;
+        }
         public List<BookModel> GetAllBooks()
         {
             return DataSource();
         }
         public BookModel GetBookById(int id)
         {
-            return DataSource().Where(i=>i.Id==id).FirstOrDefault();
+            return DataSource().Where(i => i.Id == id).FirstOrDefault();
         }
-        public List<BookModel> SearchBook(string title,string authorName)
+        public List<BookModel> SearchBook(string title, string authorName)
         {
             return DataSource().Where(x => x.Title.Contains(title) || x.Author.Contains(authorName)).ToList();
         }
         private List<BookModel> DataSource()
         {
-            return new List<BookModel>() 
+            return new List<BookModel>()
             {
                 new BookModel(){Id =1, Title="MVC", Author = "Sachin", Description="This is the description for MVC book", Category="Programming", Language="English", TotalPages=134 },
                 new BookModel(){Id =2, Title="Dot Net Core", Author = "Dwivedi", Description="This is the description for Dot Net Core book", Category="Framework", Language="Chinese", TotalPages=567 },

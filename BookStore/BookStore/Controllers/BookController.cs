@@ -10,35 +10,42 @@ namespace BookStore.Controllers
 {
     public class BookController : Controller
     {
-        private readonly BookRepository _bookRepository = null;
-        public BookController()
+        private readonly IBookRepository _bookRepository = null;
+        public BookController(IBookRepository bookRepository)
         {
-            _bookRepository = new BookRepository();
+            _bookRepository = bookRepository;
         }
         public ViewResult GetAllBooks()
         {
-            var data= _bookRepository.GetAllBooks();
+            var data = _bookRepository.GetAllBooks();
             return View(data);
         }
         public ViewResult GetBook(int id)
         {
-            var data= _bookRepository.GetBookById(id);
+            var data = _bookRepository.GetBookById(id);
             return View(data);
         }
 
-        public List<BookModel> SearchBook(string bookName ,string authorName)
+        public List<BookModel> SearchBook(string bookName, string authorName)
         {
             return _bookRepository.SearchBook(bookName, authorName);
         }
 
-        public ViewResult AddNewBook()
+        public ViewResult AddNewBook(bool isSuccess=false,int bookId =0)
         {
+            ViewBag.IsSuccess = isSuccess;
+            ViewBag.BookID = bookId;
             return View();
         }
 
-        public ViewResult SaveBook()
+        public IActionResult SaveBook(BookModel bookModel)
         {
-            return View();
+            int id = _bookRepository.AddNewBook(bookModel);
+            if (id > 0)
+            {
+                return RedirectToAction(nameof(AddNewBook),new { isSuccess = true,bookId = id });
+            }
+            return View("AddNewBook");
         }
     }
 }
