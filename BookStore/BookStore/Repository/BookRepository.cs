@@ -18,7 +18,7 @@ namespace BookStore.Repository
         {
             _context = context;
         }
-        public int AddNewBook(BookModel bookModel)
+        public async Task<int> AddNewBook(BookModel bookModel) //Instead of returning Type we have to retrun type of task i.e Task<int>
         {
             var newBook = new Book()
             {
@@ -33,10 +33,10 @@ namespace BookStore.Repository
             };
 
             //Add In Context
-            _context.Books.Add(newBook);
+            await _context.Books.AddAsync(newBook);
 
             //Add in DB
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return newBook.Id;
         }
