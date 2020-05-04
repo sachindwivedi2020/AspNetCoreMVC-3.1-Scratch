@@ -1,6 +1,7 @@
 ﻿using BookStore.DBLayer;
 using BookStore.DBLayer.Entity;
 using BookStore.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,9 +41,27 @@ namespace BookStore.Repository
 
             return newBook.Id;
         }
-        public List<BookModel> GetAllBooks()
+        public async Task<List<BookModel>> GetAllBooks()
         {
-            return DataSource();
+            var allbooks = await _context.Books.ToListAsync();
+            var bookModels = new List<BookModel>();
+            if (allbooks != null)
+            {
+                foreach (var item in allbooks)
+                {
+                    bookModels.Add(new BookModel() 
+                    { 
+                        Id = item.Id, 
+                        Author = item.Author,
+                        Description = item.Description,
+                        Category = item.Category,
+                        Language = item.Language, 
+                        TotalPages = item.TotalPages
+                    });
+                }
+               
+            }
+            return bookModels;
         }
         public BookModel GetBookById(int id)
         {

@@ -15,9 +15,9 @@ namespace BookStore.Controllers
         {
             _bookRepository = bookRepository;
         }
-        public ViewResult GetAllBooks()
+        public async Task<ViewResult> GetAllBooks()
         {
-            var data = _bookRepository.GetAllBooks();
+            var data = await _bookRepository.GetAllBooks();
             return View(data);
         }
         public ViewResult GetBook(int id)
@@ -35,7 +35,7 @@ namespace BookStore.Controllers
         {
             ViewBag.IsSuccess = isSuccess;
             ViewBag.BookID = bookId;
-            return View();
+            return View(); 
         }
 
         public async Task<IActionResult> SaveBook(BookModel bookModel)
