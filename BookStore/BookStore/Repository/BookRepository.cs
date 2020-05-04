@@ -43,29 +43,48 @@ namespace BookStore.Repository
         }
         public async Task<List<BookModel>> GetAllBooks()
         {
+            // To get the data from DB ,Use ToListAsync() method for async call
             var allbooks = await _context.Books.ToListAsync();
             var bookModels = new List<BookModel>();
             if (allbooks != null)
             {
                 foreach (var item in allbooks)
                 {
-                    bookModels.Add(new BookModel() 
-                    { 
-                        Id = item.Id, 
+                    bookModels.Add(new BookModel()
+                    {
+                        Id = item.Id,
+                        Title =item.Title,
                         Author = item.Author,
                         Description = item.Description,
                         Category = item.Category,
-                        Language = item.Language, 
+                        Language = item.Language,
                         TotalPages = item.TotalPages
                     });
                 }
-               
+
             }
             return bookModels;
         }
-        public BookModel GetBookById(int id)
+        public async Task<BookModel> GetBookById(int id)
         {
-            return DataSource().Where(i => i.Id == id).FirstOrDefault();
+            //use FindAsync method to get the details of book
+            var book = await _context.Books.FindAsync(id);
+
+            if (book != null)
+            {
+                var bookModels=  new BookModel()
+                {
+                    Id = book.Id,
+                    Title = book.Title,
+                    Author = book.Author,
+                    Description = book.Description,
+                    Category = book.Category,
+                    Language = book.Language,
+                    TotalPages = book.TotalPages
+                };
+                return bookModels;
+            }
+            return null;
         }
         public List<BookModel> SearchBook(string title, string authorName)
         {
