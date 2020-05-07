@@ -5,10 +5,9 @@
     <div class="container">
         <h3 class="display-4">Add new book</h3>
 
-        @if (ViewBag.IsSuccess)
+        @if (ViewBag.IsSuccess == true)
             //    Display Success Message based on Post Request
             //@ViewBag.BookID used to view the details of current inserted book
-
         {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Congratulations!</strong> You have successfully added the new Book .<br />
@@ -23,11 +22,13 @@
             <div class="form-group">
                 <label asp-for="Title"></label>
                 <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="Author"></label>
                 <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -46,6 +47,7 @@
             <div class="form-group">
                 <label asp-for="TotalPages"></label>
                 <input asp-for="TotalPages" class="form-control" />
+                <span asp-validation-for="TotalPages" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Add book" class="btn btn-primary" />

@@ -28,7 +28,7 @@ namespace BookStore.Repository
                 Description = bookModel.Description,
                 Category = bookModel.Category,
                 Language = bookModel.Language,
-                TotalPages = bookModel.TotalPages,
+                TotalPages = bookModel.TotalPages.HasValue ? bookModel.TotalPages.Value : 0,
                 CreatedBy = DateTime.UtcNow,
                 UpdatedBy = "Sachin Dwivedi"
             };
@@ -53,7 +53,7 @@ namespace BookStore.Repository
                     bookModels.Add(new BookModel()
                     {
                         Id = item.Id,
-                        Title =item.Title,
+                        Title = item.Title,
                         Author = item.Author,
                         Description = item.Description,
                         Category = item.Category,
@@ -72,7 +72,7 @@ namespace BookStore.Repository
 
             if (book != null)
             {
-                var bookModels=  new BookModel()
+                var bookModels = new BookModel()
                 {
                     Id = book.Id,
                     Title = book.Title,
